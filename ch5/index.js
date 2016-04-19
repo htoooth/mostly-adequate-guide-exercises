@@ -37,8 +37,8 @@ console.log(averageDollarValueNew(CARS))
 
 // 4
 let _underscore = _.replace(/\W+/g, '_')
-let sanitizeNames = _.map(_underscore)
-console.log(sanitizeNames(["Hello World"]))
+let sanitizeNames = _.map(_.compose(_underscore, _.toLower, _.prop('name')))
+console.log(sanitizeNames(CARS))
 
 // Bonus 1
 
@@ -49,8 +49,9 @@ console.log(sanitizeNames(["Hello World"]))
 //   }).join(', ');
 // };
 
-let formatMoney = x => `0000${x.dollar_value}`;
-let availablePricesNew = _.compose(_.join(', '), _.map(formatMoney), _.filter(_.prop('in_stock')))
+let formatMoney = x => `0000${dollar_value}`;
+let formatMoney2 = _.compose(formatMoney, _.prop("dollar_value"))
+let availablePricesNew = _.compose(_.join(', '), _.map(formatMoney2), _.filter(_.prop('in_stock')))
 console.log(availablePricesNew(CARS))
 
 // Bonus 2
@@ -63,7 +64,7 @@ console.log(availablePricesNew(CARS))
 // 
 let append = _.flip(_.concat)
 let fastestCar = _.compose(append(" is the fastest"),
-                            _.prop("name"),
-                            _.last,
-                            _.sortBy(_.prop("horsepower")));
+  _.prop("name"),
+  _.last,
+  _.sortBy(_.prop("horsepower")));
 console.log(fastestCar(CARS))
