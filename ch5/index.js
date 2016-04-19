@@ -49,22 +49,24 @@ console.log(sanitizeNames(CARS))
 //   }).join(', ');
 // };
 
-let formatMoney = x => `0000${dollar_value}`;
+let formatMoney = x => `0000${x}`;
 let formatMoney2 = _.compose(formatMoney, _.prop("dollar_value"))
 let availablePricesNew = _.compose(_.join(', '), _.map(formatMoney2), _.filter(_.prop('in_stock')))
 console.log(availablePricesNew(CARS))
 
 // Bonus 2
-
 // var fastestCar = function(cars) {
 //   var sorted = _.sortBy(function(car){ return car.horsepower }, cars);
 //   var fastest = _.last(sorted);
 //   return fastest.name + ' is the fastest';
 // };
 // 
+
 let append = _.flip(_.concat)
-let fastestCar = _.compose(append(" is the fastest"),
+let fastestCar = _.compose(
+  append(" is the fastest"),
   _.prop("name"),
   _.last,
-  _.sortBy(_.prop("horsepower")));
+  _.sortBy(_.prop("horsepower"))
+);
 console.log(fastestCar(CARS))
